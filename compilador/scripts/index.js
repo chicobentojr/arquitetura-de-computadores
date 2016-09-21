@@ -53,8 +53,8 @@ function codeToBin(code){
 function compile(){
   var code = document.getElementsByTagName('textarea')[0].value.trim();
   var resultHex = document.getElementById('result-hex');
-  var resultBin = document.getElementById('result-bin');
+  //var resultBin = document.getElementById('result-bin');
 
-  resultHex.innerHTML = codeToHex(code);
-  resultBin.innerHTML = codeToBin(code);
+  resultHex.value = codeToHex(code);
+  //resultBin.innerHTML = codeToBin(code);
 }

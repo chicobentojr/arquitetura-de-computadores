@@ -8,8 +8,14 @@
 </head>
 
 <body>
-    <h1>My Compiler</h1>
-    <textarea name="name" autofocus="true" rows="20" cols="100">addi $0, $31, 5
+    <header>
+        Meu Compilador
+    </header>
+    <main>
+        <div class="collumns">
+            <div class="collum">
+              <h3>Digite seu código aqui:</h3>
+                <textarea class="code" autofocus="true" >addi $0, $31, 5
 add $1, $0, $31
 add $2, $0, $31
 add $3, $0, $31
@@ -25,11 +31,17 @@ sub $4, $3, $5
 add $2, $1, $21
 jump $19, $0, $0, 6
 jump $20, $0, $1, 15</textarea>
+            </div>
+            <div class="collum">
+              <h3>Resultado:</h3>
+              <textarea id="result-hex" class="code" disabled></textarea>
 
-    <pre id="result-hex"></pre>
-    <pre id="result-bin"></pre>
-
-    <button onClick="compile()" type="button" name="button">Click!</button>
+            </div>
+        </div>
+        <div class="actions">
+          <a href="#" onClick="compile()">Compilar</a>
+        </div>
+    </main>
 
     <script src="scripts/utils.js"></script>
     <script src="scripts/data.js"></script>
