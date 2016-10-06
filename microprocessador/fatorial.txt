@@ -1,0 +1,18 @@
+Atribui o número pro R0
+Atribui o resultado pro R1 (resultado = numero)
+Atribui o atual pro R2 (atual = numero)
+Atribui o cont_mult pro R3 (cont_mult = numero)
+Atribui o cont_soma pro R4 (cont_soma = cont_mult - 1)
+Atribui o 1 pro R5
+
+Se cont_mult = 1 pula 9
+  Se cont_soma = 1 pula 4
+    resultado = resultado + atual
+    cont_soma = cont_soma - 1
+    jump to --> 9
+ cont_mult = cont_mult - 1
+ cont_soma = cont_mult - 1
+ atual = resultado
+ jump to --> 8
+mostra resultado
+...
