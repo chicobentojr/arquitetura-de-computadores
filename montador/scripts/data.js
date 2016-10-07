@@ -31,6 +31,7 @@ Commands.all = {
   "rotsi": { opcode: "11011", isImmediate: true, isFullArgs: false },
   "ltheni": { opcode: "11100", isImmediate: true, isFullArgs: false },
   "load": { opcode: "11110", isImmediate: false, isFullArgs: false },
+  "store": { opcode: "11111", isImmediate: false, isFullArgs: false }
 }
 
 Commands.getAll = (function() {
