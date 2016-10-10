@@ -15,24 +15,24 @@
         <div class="collumns">
             <div class="collum">
               <h3>Digite seu código aqui:</h3>
-                <textarea class="code" autofocus="true" >addi $0, $31, 7
-store $0, $31, $31
-load $0, $31, $31
-add $1, $0, $31
-add $2, $0, $31
-add $3, $0, $31
-subi $4, $3, 1
-addi $5, $31, 1
-beq $16, $3, $5, 9
-beq $17, $4, $5, 4
-add $1, $1, $2
-sub $4, $4, $5
-jump $18, $0, $0, 9
-sub $3, $3, $5
-sub $4, $3, $5
-add $2, $1, $21
-jump $19, $0, $0, 8
-jump $20, $0, $1, 17</textarea>
+                <textarea class="code" autofocus="true" >addi $1, $0, 7
+store $1, $0, 0
+load $1, $0, $0
+add $2, $1, $0
+add $3, $1, $0
+add $4, $1, $0
+subi $5, $3, 1
+addi $6, $0, 1
+beq $4, $6, 9
+beq $5, $6, 4
+add $2, $2, $3
+sub $5, $5, $6
+jump $1, $1, 9
+sub $4, $4, $6
+sub $5, $4, $6
+add $3, $2, $0
+jump $0, $0, 8
+jump $1, $2, 17</textarea>
             </div>
             <div class="collum">
               <h3>Resultado:</h3>

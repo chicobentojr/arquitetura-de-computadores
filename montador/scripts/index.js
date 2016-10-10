@@ -22,6 +22,11 @@ function lineToBin(line) {
         return recorderBin.toFixSize(5);
       });
 
+  if (command.dontSave){
+    recorders.splice(0, 0, "11111");
+    command.isFullArgs = true;
+  }
+
   if (command.isFullArgs) {
     immediate = recorders[recorders.length - 1].toFixSize(12);
     recorders[recorders.length - 1] = "";
