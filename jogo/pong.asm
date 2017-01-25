@@ -3,6 +3,7 @@
 .data 0x10000000
 	bitmapDisplay: .word 0x10010000
 	keyboard: .word 0xffff0000
+	delayTime: .word 5000
 	colorBlue: .word 0xff
 	colorBlack: .word 0x0
 	width: .word 128
@@ -16,11 +17,13 @@
  	directionRight: .word 2
  	directionDown: .word 3
  	directionLeft: .word 4
+ 	directionUpRight: .word 5
+ 	directionDownRight: .word 6
 .text
 main:
 	lw $10, bitmapDisplay
 	lw $11, colorBlue
-	lw $16, directionRight
+	lw $16, directionDownRight
 	lw $19, keyboard
 	lw $21, width
 	lw $22, height
@@ -135,7 +138,7 @@ movePlayer2Down:
 
 delay:
 	addi $9, $31, 0
-	addi $20, $0, 1000
+	lw $20, delayTime
 delaying:
 	beq $20, $0, endDelay
 	nop
@@ -201,6 +204,8 @@ moveBall:
 	beq $16, 2, moveBallToRight
 	beq $16, 3, moveBallToDown
 	beq $16, 4, moveBallToLeft
+	beq $16, 5, moveBallToUpRight
+	beq $16, 6, moveBallToDownRight
 	add $31, $8, $0
 	jr $31
 
@@ -219,32 +224,48 @@ controlBall:
 
 revertBallXAxis:
 	add $7, $31, $0
-	addi $16, $16, 2
-	bgt $16, 4, setBallDirectionRight
+	beq $16, 2, setBallDirectionLeft
+	beq $16, 4, setBallDirectionRight
 	add $31, $7, $0
 	jr $31
 
 revertBallYAxis:
 	add $7, $31, $0
-	addi $16, $16, 2
-	bgt $16, 3, setBallDirectionUp
+	beq $16, 1, setBallDirectionDown
+	beq $16, 3, setBallDirectionUp
+	beq $16, 5, setBallDirectionDownRight
+	beq $16, 6, setBallDirectionUpRight
 	add $31, $7, $0
 	jr $31
 
 setBallDirectionUp:
 	lw $16, directionUp
+	add $31, $7, $0
 	jr $31
 
 setBallDirectionRight:
 	lw $16, directionRight
+	add $31, $7, $0
 	jr $31
 	
 setBallDirectionDown:
-	lw $16, directionRight
+	lw $16, directionDown
+	add $31, $7, $0
 	jr $31
 
 setBallDirectionLeft:
 	lw $16, directionLeft
+	add $31, $7, $0
+	jr $31
+	
+setBallDirectionUpRight:
+	lw $16, directionUpRight
+	add $31, $7, $0
+	jr $31
+
+setBallDirectionDownRight:
+	lw $16, directionDownRight
+	add $31, $7, $0
 	jr $31
 
 moveBallToUp:
@@ -283,6 +304,28 @@ moveBallToLeft:
 	jal drawBall
 	lw $11, colorBlue
 	addi $28, $28, -1
+	jal drawBall
+	add $31, $7, $0
+	jr $31
+	
+moveBallToUpRight:
+	add $7, $31, $0
+	lw $11, colorBlack
+	jal drawBall
+	lw $11, colorBlue
+	addi $28, $28, 1
+	addi $29, $29, -2
+	jal drawBall
+	add $31, $7, $0
+	jr $31
+
+moveBallToDownRight:
+	add $7, $31, $0
+	lw $11, colorBlack
+	jal drawBall
+	lw $11, colorBlue
+	addi $28, $28, 1
+	addi $29, $29, 2
 	jal drawBall
 	add $31, $7, $0
 	jr $31
