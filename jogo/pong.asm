@@ -3,7 +3,7 @@
 .data 0x10000000
 	bitmapDisplay: .word 0x10010000
 	keyboard: .word 0xffff0000
-	delayTime: .word 1000
+	delayTime: .word 2000
 	colorBlue: .word 0xff
 	colorBlack: .word 0x0
 	width: .word 128
@@ -13,20 +13,13 @@
  	startPoint2: .word 63
  	ballX: .word 63
  	ballY: .word 63
- 	directionUp: .word 1
- 	directionRight: .word 2
- 	directionDown: .word 3
- 	directionLeft: .word 4
- 	directionUpRight: .word 5
- 	directionDownRight: .word 6
- 	directionUpLeft: .word 7
- 	directionDownLeft: .word 8
+ 	one: .word 1
  	zero: .word 0
 .text
 main:
 	lw $10, bitmapDisplay
 	lw $11, colorBlue
-	lw $16, directionUp
+	lw $16, one
 	lw $17, zero
 	lw $19, keyboard
 	lw $21, width
@@ -38,7 +31,7 @@ main:
 	lw $29, ballY
 	jal setup
 	jal loop
-	j fim
+	j end
 
 setup:
 	addi $7, $31, 0
@@ -215,38 +208,59 @@ moveBall:
 
 controlBall:
 	add $8, $31, $0
-	add $24, $0, 3
+	add $24, $0, 4
 	ble $28, $24, checkPlayer1
-	subi $24, $21, 5
+	subi $24, $21, 4
 	bge $28, $24, checkPlayer2
 	subi $24, $22, 5
 	bge $29, $24, checkCornerY
-	add $24, $0, 3
+	add $24, $0, 5
 	ble $29, $24, checkCornerY
 	add $31, $8, $0
 	jr $31
 	
 checkPlayer1:
-	add $5, $31, $0
+	add $3, $31, $0
 	add $24, $26, $23
-	bge $29, $24, fim
+	addi $24, $24, 1
+	bgt $29, $24, gameOver
 	sub $24, $26, $23
-	ble $29, $24, fim
+	sub $24, $24, 1
+	blt $29, $24, gameOver
 	sub $17, $26, $29
+	div $17, $17, 2
+	andi $18, $16, -1
+	li $5, 3
+	li $2, 42
+	syscall
+	addi $16, $4, 0
+	or $16, $16, $18
 	jal checkCornerX
-	add $31, $5, $0
+	add $31, $3, $0
 	jr $31
 
 checkPlayer2:
-	add $5, $31, $0
+	add $3, $31, $0
 	add $24, $27, $23
-	bge $29, $24, fim
+	addi $24, $24, 1
+	bgt $29, $24, gameOver
 	sub $24, $27, $23
-	ble $29, $24, fim
+	sub $24, $24, 1
+	ble $29, $24, gameOver
 	sub $17, $27, $29
+	div $17, $17, 2
+	andi $18, $16, -1
+	li $5, 3
+	li $2, 42
+	syscall
+	addi $16, $4, 0
+	or $16, $16, $18
 	jal checkCornerX
-	add $31, $5, $0
+	add $31, $3, $0
 	jr $31	
+
+gameOver:
+	j end
 
 checkCornerX:
 	add $6, $31, $0
@@ -337,6 +351,6 @@ drawPixel:
 	add $31, $9, $0
 	jr $31
 
-fim:
-	li $v0,10
+end:
+	li $v0 ,10
 	syscall
